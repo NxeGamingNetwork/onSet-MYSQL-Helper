@@ -111,36 +111,6 @@ function get(table, --[[optional]]select)
      end
 end
 
---what = {
---    ['id'] = 6,
---    ['steam_id'] = "1231321321313"
---}
---where(what)
---print(_G.wherec);
---getPlayerData = get("players")
-
---print("GPD: " ..getPlayerData)
---print("############### DEBUG getPlayerData START ###############")
---for key,value in next,getPlayerData,nil do
---    print("KEY: ".. key .. " VALUE: " .. value)
---end
---print("############### DEBUG getPlayerData ENDED ###############")
-
-
---vuls = {
---    ['steam_id'] = "123156456445623321",
---    ['name'] = 'HansPeter Wurst'
---}
-
---insert("players", vuls)
---vuls = {
---    ['steam_id'] = "123156456445623321",
---    ['name'] = 'HansPeter Wurst'
---}
---where(vuls)
---delete("players")
-
-
 AddFunctionExport("get", get)
 AddFunctionExport("where", where)
 AddFunctionExport("insert", insert)

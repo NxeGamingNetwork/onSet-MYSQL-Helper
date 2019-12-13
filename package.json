@@ -1,6 +1,6 @@
 {
   "author": "MASYNO25",
-  "version": "1.0",
+  "version": "0.0.5",
   "server_scripts": [
     "json.lua",
     "server.lua",
