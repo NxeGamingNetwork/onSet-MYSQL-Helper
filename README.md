@@ -10,9 +10,9 @@ vuls = {
 insert("players", vuls)
 
 ```
-
+MYSQL (MariaDB) DELETE
 ```
-insert("players", vuls)
+
 vuls = {
     ['steam_id'] = "123156456445623321",
     ['name'] = 'HansPeter Wurst'
@@ -21,7 +21,7 @@ where(vuls) -- Optional
 delete("players")
 
 ```
-
+MYSQL (MariaDB) get
 ```
 what = {
     ['id'] = 6,
