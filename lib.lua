@@ -50,6 +50,38 @@ function delete(table)
         return false
      end
 end
+function update(table, values)
+    if type(values) == "table" then
+        first = 0
+        last = 0
+        for _ in pairs(values) do last = last + 1 end
+
+        clause = "UPDATE ".. table.." SET"
+        for key,value in next,values,nil do
+            
+            
+            if first+1 == last then 
+                clause = clause.." "..key.."='"..value.."' "
+            else
+                clause = clause.." "..key.."='"..value.."', "
+            end
+            first = first+1
+            
+        end
+
+        if _G.wherec == nil then
+            clause = clause
+        else
+            clause = clause.." WHERE ".._G.wherec
+            
+        end
+
+        local result = mariadb_await_query(_G.db, clause..";")
+        
+    else
+        return nil
+    end
+end
 function insert(table, values)
     if type(values) == "table" then
 
@@ -111,7 +143,9 @@ function get(table, --[[optional]]select)
      end
 end
 
+
 AddFunctionExport("get", get)
 AddFunctionExport("where", where)
 AddFunctionExport("insert", insert)
 AddFunctionExport("delete", delete)
+AddFunctionExport("update", update)
