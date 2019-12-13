@@ -42,8 +42,8 @@ end
 
 _G.db = mariadb_connect(dbConfig.host, dbConfig.username, dbConfig.password, dbConfig.database)
 if(_G.db ~= false) then
-    print("MariaDB läuft und is verbunden...")
+    print("MariaDB running and connected...")
 else
-    print("irgendwas is schief gelaufen bei MariaDB, schau ma mariadb_log datei nach..")
+    print("Something went wrong with MariaDB, check out mariadb_log file...")
     ServerExit() 
 end
