@@ -128,7 +128,7 @@ function get(table, --[[optional]]select)
 
      elseif type(select) == "string" and _G.wherec ~= nil then
          clause = 'SELECT '..select.." FROM "..table.." WHERE ".._G.wherec
-         print(" [DEBUG CLAUSE] "..clause)
+        -- print(" [DEBUG CLAUSE] "..clause)
 
          local result = mariadb_await_query(_G.db, clause..";")
          if mariadb_get_row_count() ~= 0 then
