@@ -126,22 +126,34 @@ function get(table, --[[optional]]select)
      if type(select) == "string" and _G.wherec == nil then
         clause = 'SELECT '..select.." FROM "..table
 
+   
+        local result = mariadb_await_query(_G.db, clause..";")
+        if mariadb_get_row_count() ~= 0 then
+           row = mariadb_get_assoc(result);
+
+        end
+        mariadb_delete_result(result)
+        _G.wherec = nil
+
+        return row;
+
      elseif type(select) == "string" and _G.wherec ~= nil then
          clause = 'SELECT '..select.." FROM "..table.." WHERE ".._G.wherec
-         print(" [DEBUG CLAUSE] "..clause)
 
          local result = mariadb_await_query(_G.db, clause..";")
          if mariadb_get_row_count() ~= 0 then
             row = mariadb_get_assoc(result);
-            print("mariadb_get_value_index: "..mariadb_get_value_index(1, 1))
+
          end
          mariadb_delete_result(result)
-         return row;
+         _G.wherec = nil
 
+         return row;
      else
         return false
      end
 end
+
 
 
 AddFunctionExport("get", get)
