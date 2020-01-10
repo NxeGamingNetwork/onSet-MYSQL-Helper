@@ -32,3 +32,16 @@ what = {
 where(what) -- Optional
 getPlayerData = get("players") -- Return Array
 ```
+
+MYSQL (MariaDB) update
+```
+vuls = {
+    ['steam_id'] = "123456987"
+}
+set = {
+    ['role'] = "ADMIN",
+    ['name'] = "ONYSA",
+}
+where(vuls) -- Optional
+update("players", set)
+```

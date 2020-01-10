@@ -50,6 +50,38 @@ function delete(table)
         return false
      end
 end
+function update(table, values)
+    if type(values) == "table" then
+        first = 0
+        last = 0
+        for _ in pairs(values) do last = last + 1 end
+
+        clause = "UPDATE ".. table.." SET"
+        for key,value in next,values,nil do
+            
+            
+            if first+1 == last then 
+                clause = clause.." "..key.."='"..value.."' "
+            else
+                clause = clause.." "..key.."='"..value.."', "
+            end
+            first = first+1
+            
+        end
+
+        if _G.wherec == nil then
+            clause = clause
+        else
+            clause = clause.." WHERE ".._G.wherec
+            
+        end
+
+        local result = mariadb_await_query(_G.db, clause..";")
+        
+    else
+        return nil
+    end
+end
 function insert(table, values)
     if type(values) == "table" then
 
@@ -94,24 +126,38 @@ function get(table, --[[optional]]select)
      if type(select) == "string" and _G.wherec == nil then
         clause = 'SELECT '..select.." FROM "..table
 
+   
+        local result = mariadb_await_query(_G.db, clause..";")
+        if mariadb_get_row_count() ~= 0 then
+           row = mariadb_get_assoc(result);
+
+        end
+        mariadb_delete_result(result)
+        _G.wherec = nil
+
+        return row;
+
      elseif type(select) == "string" and _G.wherec ~= nil then
          clause = 'SELECT '..select.." FROM "..table.." WHERE ".._G.wherec
-         print(" [DEBUG CLAUSE] "..clause)
 
          local result = mariadb_await_query(_G.db, clause..";")
          if mariadb_get_row_count() ~= 0 then
             row = mariadb_get_assoc(result);
-            print("mariadb_get_value_index: "..mariadb_get_value_index(1, 1))
+
          end
          mariadb_delete_result(result)
-         return row;
+         _G.wherec = nil
 
+         return row;
      else
         return false
      end
 end
 
+
+
 AddFunctionExport("get", get)
 AddFunctionExport("where", where)
 AddFunctionExport("insert", insert)
 AddFunctionExport("delete", delete)
+AddFunctionExport("update", update)
